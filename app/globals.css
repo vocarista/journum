@@ -2,7 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+@import '~bootstrap/dist/css/bootstrap.min.css';
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+*{
+  font-family: 'Playfair Display', serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.radix-themes {
+  --default-font-family:  'Playfair Display', serif;
+  --heading-font-family:  'Playfair Display', serif;
+  --code-font-family:     'Playfair Display', serif;
+  --strong-font-family:   'Playfair Display', serif;
+  --em-font-family:       'Playfair Display', serif;
+  --quote-font-family:    'Playfair Display', serif;
+}
+
+/* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
@@ -30,4 +48,4 @@ body {
   .text-balance {
     text-wrap: balance;
   }
-}
+} */
