@@ -1,10 +1,10 @@
 {
   "pages": {
-    "/page": [
+    "/user/notebooks/editor/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/page.css",
-      "static/chunks/app/page.js"
+      "static/css/app/user/notebooks/editor/page.css",
+      "static/chunks/app/user/notebooks/editor/page.js"
     ],
     "/layout": [
       "static/chunks/webpack.js",
@@ -12,11 +12,16 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/user/notebooks/editor/page": [
+    "/user/profile/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/user/notebooks/editor/page.css",
-      "static/chunks/app/user/notebooks/editor/page.js"
+      "static/chunks/app/user/profile/page.js"
+    ],
+    "/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/page.css",
+      "static/chunks/app/page.js"
     ]
   }
 }

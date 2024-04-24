@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react';
+import React from 'react';
 import styles from "./notebook.module.css";
 import deleteIcon from '@/public/delete.png';
 import Image from 'next/image';
@@ -7,21 +7,6 @@ import { Button } from '@radix-ui/themes';
 import { useRouter } from 'next/navigation';
 
 const Notebook = (props: any) => {
-  // const [coverColor, setCoverColor] = useState('#dfe6e9');
-  // const [pageColor, setPageColor] = useState('#f5f6fa');
-  // const [pageContent, setPageContent] = useState('');
-
-  // const handleCoverColorChange = (e: any) => {
-  //   setCoverColor(e.target.value);
-  // };
-
-  // const handlePageColorChange = (e: any) => {
-  //   setPageColor(e.target.value);
-  // };
-
-  // const handlePageContentChange = (e: any) => {
-  //   setPageContent(e.target.value);
-  // };
   const router = useRouter();
 
   const { title, description, editMode, id } = props;

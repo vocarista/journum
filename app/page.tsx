@@ -1,20 +1,19 @@
 "use client"
 import Notebook from "@/components/notebook/Notebook";
-import { Flex } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
-import Image from "next/image";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Home() {
   const [notebooks, setNotebooks] = useState([]);
   const {data: session, status} = useSession();
+  const router = useRouter();
 
   useEffect(() => {
-    if (status !== 'loading' && !session) {
-      redirect("/api/auth/signin")
+    if (status === 'unauthenticated') {
+      router.push('/api/auth/signin');
     }
-  }, [session])
+}, [status])
 
   useEffect(() => {
     async function fetchNotebooks() {

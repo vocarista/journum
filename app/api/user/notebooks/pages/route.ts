@@ -32,10 +32,40 @@ export async function POST(req: NextRequest) {
         }
 
         const body = await req.json();
-        const { title, content, notebook_id } = body
+        console.log(body);
+        const { title, content, notebookId } = body
 
-        if (!title || !content || !notebook_id) {
-            throw new Error('Missing required fields: title, content or notebook_id');
+        if (!title || !notebookId) {
+            throw new Error('Missing required fields: title or notebook_id');
+        }
+
+        const [rows]: any = await connection.execute(
+            "INSERT INTO pages (user_email, title, content, notebook_id) VALUES (?, ?, ?, ?)",
+            [session?.user?.email, title, content, notebookId]
+        );
+
+        connection.release();
+        return NextResponse.json({ success: true, id: rows.id });
+    } catch (error: any) {
+        console.error(error);
+        return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+}
+
+export async function PATCH(req: NextRequest) {
+    try {
+        const connection = await getConnection();
+        const session = await getServerSession();
+
+        if (!session || !session.user || !session.user.email) {
+            throw new Error('Unauthorized access');
+        }
+
+        const body = await req.json();
+        const { title, content, pageId } = body;
+
+        if (!pageId) {
+            throw new Error('Missing required fields: id');
         }
 
         const sanitizedContent = sanitizeHtml(content, {
@@ -46,25 +76,10 @@ export async function POST(req: NextRequest) {
             },
         });
 
-        const [result]: any = await connection.execute(
-            "SELECT id FROM users WHERE email = ?",
-            [session?.user?.email]
-        );
-
-        if (!result.length) {
-            throw new Error('User not found');
-        }
-
-        const userId = result[0].id;
-
-        const [rows]: any = await connection.execute(
-            "INSERT INTO pages (user_id, user_email, title, content, notebook_id) VALUES (?, ?, ?, ?, ?)",
-            [userId, session?.user?.email, title, sanitizedContent, notebook_id]
-        );
-
+        const [result]: any = await connection.execute('UPDATE pages SET title = ?, content = ? WHERE id = ?', [title, sanitizedContent, pageId]);
         connection.release();
-        return NextResponse.json({ success: true, id: rows.id });
-    } catch (error: any) {
+        return NextResponse.json({ success: true });
+    } catch(error: any) {
         console.error(error);
         return NextResponse.json({ error: error.message }, { status: 500 });
     }

@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, } from 'react';
 import { useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
 import { AlertDialog, Button, Card, Flex, Table, Text } from '@radix-ui/themes';
@@ -15,8 +15,8 @@ const Profile = () => {
     const email = user?.email;
     const image = user?.image;
 
-    const [newName, setNewName] = useState('');
-    const [newEmail, setNewEmail] = useState('');
+    // const [newName, setNewName] = useState('');
+    // const [newEmail, setNewEmail] = useState('');
 
     
 

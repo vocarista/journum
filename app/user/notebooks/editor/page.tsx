@@ -2,7 +2,6 @@
 import { useState, useEffect} from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { useEditorStore } from '@/stores/store';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { Button, Table } from '@radix-ui/themes';
@@ -29,14 +28,19 @@ export default function Editor() {
     const {data: session, status} = useSession();
     const router = useRouter();
     const notebookId = localStorage.getItem('notebookId');
-    const setPageId = useEditorStore(state => state.setPageId);
-    const pageId = useEditorStore(state => state.pageId);
+    const [pageId, setPageId] = useState('');
     const [content, setContent] = useState('');
-    const [title, setTitle] = useState('');
+    const [title, setTitle] = useState('New Page');
     const [pages, setpages] = useState([]);
 
     useEffect(() => {
-        async function fetchPages() {
+        if (status === 'unauthenticated') {
+            router.push('/login');
+        }
+    }, [status])
+
+    async function fetchPages() {
+        try {
             const response = await fetch(`/api/user/notebooks/pages?notebookId=${notebookId}`, {
                 method: 'GET',
                 headers: {
@@ -45,20 +49,26 @@ export default function Editor() {
             })
             const data = await response.json();
             setpages(data);
+        } catch (error) {
+            console.error(error);
         }
+    }
+
+    useEffect(() => {
         fetchPages();
-    }, [])
+    }, [notebookId])
 
     async function savePage() {
         const response = await fetch(`/api/user/notebooks/pages`, {
-            method: 'UPDATE',
+            method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({notebookId: notebookId, content: content, title: title}),
+            body: JSON.stringify({pageId: pageId, content: content, title: title}),
         })
 
         if (response.ok) {
+            fetchPages();
             window.alert('Page saved successfully');
         } else {
             window.alert('Failed to save page');
@@ -76,14 +86,15 @@ export default function Editor() {
 
         if (response.ok) {
             window.alert('Page created successfully');
+            fetchPages();
         } else {
             window.alert('Failed to create page');
         }
     }
 
     return (
-        <div className="min-h-screen max-w-screen bg-black min-w-screen grid lg:grid-cols-2 place-items-start">
-            <div className = "lg:w-1/3 h-full overflow-y-auto flex flex-col">
+        <div className="min-h-screen max-w-screen bg-black min-w-screen grid lg:grid-cols-2 place-items-start sm:place-items-center">
+            <div className = "ml-10 lg:w-1/3 h-full overflow-y-auto flex flex-col">
             <Table.Root variant="ghost" className="cursor-pointer flex flex-col bg-gradient-to-br from-slate-400 to-white shadow-lg shadow-neutral-700">
                 <Table.Header>
                     <Table.Row>
@@ -94,12 +105,13 @@ export default function Editor() {
                 </Table.Header>
                 <Table.Body>
                     {pages.map((page: any, index) => (
-                        <Table.Row key={index} className="hover:bg-gray-900" onClick={() => {
+                        <Table.Row key={index} className={`hover:bg-gray-900 ${pageId === page.id ? "bg-gray-900" : ""}`} onClick={() => {
                             setPageId(page.id);
                             setContent(page.content);
+                            setTitle(page.title);
                         }}>
                             <Table.Cell>
-                                <span className="text-lg">{page.title}</span>
+                                <span className={`text-lg`}>{page.title}</span>
                             </Table.Cell>
                         </Table.Row>
                     ))}
@@ -122,7 +134,8 @@ export default function Editor() {
                       <input
                         className="text-violet11 shadow-violet7 focus:shadow-violet8 inline-flex h-[35px] w-full flex-1 items-center justify-center rounded-[4px] px-[10px] text-[15px] leading-none shadow-[0_0_0_1px] outline-none focus:shadow-[0_0_0_2px]"
                         id="title"
-                        defaultValue="My Notebook"
+                        defaultValue="New Page"
+                        onChange={(event) => setTitle(event.target.value)}
                       />
                     </fieldset>
                     <div className="mt-[25px] flex justify-end">
@@ -144,15 +157,18 @@ export default function Editor() {
                 </Dialog.Portal>
             </Dialog.Root>
             </div>
-            <div className="sm:w-full lg:w-2/3 h-[70vh] flex flex-col">
-                <ReactQuill
-                    theme="snow"
-                    value={content}
-                    onChange={setContent}
-                    className="bg-white text-black h-full"
-                    modules={modules} />
-                <Button size = "4" variant = "soft" className = "mt-2" onClick = {savePage}>Save</Button>
+            <div className="sm:w-[90vw] lg:w-2/3 h-[70vh] flex flex-col">
+                <div>
+                    <ReactQuill
+                        theme="snow"
+                        value={content}
+                        onChange={setContent}
+                        className="bg-white text-black place-self-center"
+                        modules={modules} />
+                </div>
+                <Button variant = "soft" className = "mt-2" onClick={savePage} size = "4">Save</Button>
             </div>
+            
         </div>
     )
 }

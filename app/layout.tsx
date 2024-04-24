@@ -34,7 +34,7 @@ export default function RootLayout({
         <Navigation />
         {children}
         
-        <ThemePanel />
+        {/* <ThemePanel /> */}
         </Theme>
         </SessionProvider></body>
     </html>

@@ -1,16 +1,14 @@
 "use client";
 import Image from 'next/image';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import darkLogo from "@/public/logo-dark.png"
 import Link from 'next/link';
-import { signIn, signOut, useSession } from 'next-auth/react';
-import { Button as RadixButton, DropdownMenu, Flex, Button } from '@radix-ui/themes';
+import { useSession } from 'next-auth/react';
+import { Button } from '@radix-ui/themes';
 import userIcon from '../../public/user.png'
 import { useEffect } from 'react';
 import { redirect } from 'next/navigation';
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import noteBookIcon from '../../public/book.png'
 
 
