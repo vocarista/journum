@@ -9,25 +9,7 @@ import { useRouter } from 'next/navigation';
 const Notebook = (props: any) => {
   const router = useRouter();
 
-  const { title, description, editMode, id } = props;
-
-  const handleDelete =  () => {
-    async function deleteNotebook() {
-      const res = await fetch('/api/user/notebooks', {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({id: id}),
-      })
-      if (res.ok) {
-        window.alert('Notebook deleted successfully');
-      } else {
-        window.alert('Failed to delete notebook');
-      }
-    }
-    deleteNotebook();
-  }
+  const { title, description, editMode, id, handleDelete } = props;
 
   return (
     <div className={styles.container} onClick = {() => {
@@ -42,7 +24,10 @@ const Notebook = (props: any) => {
 					<h1 className = "text-center mt-10 font-bold text-4xl mx-4 flex-grow">{title}</h1>
           <p className = "text-center mt-10 mx-5">{description}</p>
           <div className = "place-items-center flex flex-col mt-20">
-            {!editMode && <Button onClick={handleDelete} variant = "ghost" className = "place-self-end">
+            {!editMode && <Button onClick={(event) => {
+              event.stopPropagation();
+              handleDelete(id);
+            }} variant = "ghost" className = "place-self-end">
                 <Image src = {deleteIcon} height = {30} alt = "delete" />
               </Button>}
           </div>

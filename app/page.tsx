@@ -10,19 +10,39 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    if (status === 'unauthenticated') {
+    if (status == 'unauthenticated') {
       router.push('/api/auth/signin');
     }
 }, [status])
 
+  async function fetchNotebooks() {
+    const res = await fetch('/api/user/notebooks');
+    const data = await res.json();
+    setNotebooks(data);
+  }
+
   useEffect(() => {
-    async function fetchNotebooks() {
-      const res = await fetch('/api/user/notebooks');
-      const data = await res.json();
-      setNotebooks(data);
-    }
     fetchNotebooks();
   }, [])
+
+  const handleDelete =  (id: number) => {
+    async function deleteNotebook() {
+      const res = await fetch('/api/user/notebooks', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({id: id}),
+      })
+      if (res.ok) {
+        fetchNotebooks();
+        window.alert('Notebook deleted successfully');
+      } else {
+        window.alert('Failed to delete notebook');
+      }
+    }
+    deleteNotebook();
+  }
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-4 bg-black">
@@ -31,7 +51,7 @@ export default function Home() {
       {session && 
         notebooks.map((notebook: any, index) => {
           return (
-            <Notebook editMode = {false} id={notebook.id} title={notebook.title} description={notebook.description} image={notebook.image} />
+            <Notebook handleDelete = {handleDelete} editMode = {false} id={notebook.id} title={notebook.title} description={notebook.description} image={notebook.image} />
           )
         })
       }
