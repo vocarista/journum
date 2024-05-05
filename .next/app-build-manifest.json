@@ -12,17 +12,22 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
+    "/user/notebooks/create/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/user/notebooks/create/page.css",
+      "static/chunks/app/user/notebooks/create/page.js"
+    ],
     "/user/notebooks/editor/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/css/app/user/notebooks/editor/page.css",
       "static/chunks/app/user/notebooks/editor/page.js"
     ],
-    "/user/notebooks/create/page": [
+    "/user/profile/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/user/notebooks/create/page.css",
-      "static/chunks/app/user/notebooks/create/page.js"
+      "static/chunks/app/user/profile/page.js"
     ]
   }
 }

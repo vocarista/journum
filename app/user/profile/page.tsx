@@ -2,7 +2,7 @@
 import React, { useEffect, } from 'react';
 import { useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
-import { AlertDialog, Button, Card, Flex, Table, Text } from '@radix-ui/themes';
+import { AlertDialog, Button, Flex, Table, } from '@radix-ui/themes';
 import Image from 'next/image';
 import userIcon from '@/public/user.png';
 import Link from 'next/link';

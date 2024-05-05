@@ -1,7 +1,7 @@
 import { getConnection } from "@/utils/db";
 import { NextRequest, NextResponse, } from "next/server";
 import { getServerSession } from "next-auth";
-import sanitizeHtml from 'sanitize-html';
+// import sanitizeHtml from 'sanitize-html';
 
 export async function GET(req: NextRequest) {
     try {
@@ -68,15 +68,15 @@ export async function PATCH(req: NextRequest) {
             throw new Error('Missing required fields: id');
         }
 
-        const sanitizedContent = sanitizeHtml(content, {
-            allowedTags: ['p', 'br', 'b', 'i', 'u', 'a', 'ul', 'ol', 'li', 'blockquote', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'img'],
-            allowedAttributes: {
-                'a': ['href', 'name', 'target'],
-                'img': ['src', 'alt'],
-            },
-        });
+        // const sanitizedContent = sanitizeHtml(content, {
+        //     allowedTags: ['p', 'br', 'b', 'i', 'u', 'a', 'ul', 'ol', 'li', 'blockquote', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'img'],
+        //     allowedAttributes: {
+        //         'a': ['href', 'name', 'target'],
+        //         'img': ['src', 'alt'],
+        //     },
+        // });
 
-        const [result]: any = await connection.execute('UPDATE pages SET title = ?, content = ? WHERE id = ?', [title, sanitizedContent, pageId]);
+        const [result]: any = await connection.execute('UPDATE pages SET title = ?, content = ? WHERE id = ?', [title, content, pageId]);
         connection.release();
         return NextResponse.json({ success: true });
     } catch(error: any) {
