@@ -1,9 +1,9 @@
 {
-  "/page": "app/page.js",
   "/api/user/notebooks/route": "app/api/user/notebooks/route.js",
-  "/user/notebooks/create/page": "app/user/notebooks/create/page.js",
+  "/page": "app/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
   "/user/notebooks/editor/page": "app/user/notebooks/editor/page.js",
   "/api/user/notebooks/pages/route": "app/api/user/notebooks/pages/route.js",
-  "/user/profile/page": "app/user/profile/page.js",
-  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js"
+  "/user/profile/page": "app/user/profile/page.js"
 }
