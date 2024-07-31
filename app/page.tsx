@@ -45,7 +45,7 @@ export default function Home() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-4 bg-black">
+    <main className="flex min-h-screen flex-col items-center p-4 bg-black">
       <h1 className = "text-4xl text-white">My Notebooks</h1>
       <div className = "grid sm:grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-20 mt-5">
       {session && 
