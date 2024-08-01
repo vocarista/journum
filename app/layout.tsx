@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import SessionProvider from "../components/SessionProvider"
 import '@radix-ui/themes/styles.css';
 import "./globals.css";
@@ -7,9 +6,6 @@ import { getServerSession, Session } from "next-auth";
 import Navigation from "@/components/navbar/Navigation";
 import { Theme, ThemePanel } from "@radix-ui/themes";
 import { Toaster } from "@/components/ui/toaster";
-
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Journum",
@@ -29,7 +25,7 @@ export default function RootLayout({
 }>, session: Session) {
   return (
     <html lang="en">
-      <body className={inter.className}><SessionProvider session = {session}>
+      <body><SessionProvider session = {session}>
       <Theme accentColor="gold" grayColor="sand" radius="small" panelBackground="translucent" appearance="dark">
         
         <Navigation />

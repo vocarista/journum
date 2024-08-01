@@ -47,7 +47,7 @@ const Notebook = (props: any) => {
 
   return (
     <div
-      className={`w-full min-h-[200px] bg-amber-50 rounded-2xl shadow-xl shadow-gray-700 p-3 relative overflow-hidden`}
+      className={`w-full min-h-[200px] bg-gradient-to-br from-amber-50 to-amber-300 rounded-2xl shadow-xl shadow-zinc-700  p-3 relative overflow-hidden hover:shadow-xl hover:shadow-zinc-600 hover:scale-105 transition-transform duration-300`}
       onMouseEnter={() => setShowMore(true)}
       onMouseLeave={() => setShowMore(false)}
     >
@@ -55,7 +55,7 @@ const Notebook = (props: any) => {
         {title.length > 60 ? title.substring(0, 60) + "..." : title}
       </div>
       <div
-        className={`absolute bottom-0 left-0 right-0 bg-gray-900 transition-transform duration-300 ease-in-out shadow-md shadow-white ${
+        className={`absolute bottom-0 left-0 right-0 bg-zinc-900 transition-transform duration-300 ease-in-out shadow-md shadow-white ${
           showMore ? 'translate-y-0' : 'translate-y-full'
         }`}
       >
