@@ -41,7 +41,8 @@ export default function CreateNotebook() {
             } else {
               toast({
                 title: "Oops! Something went wrong.",
-                description: "Notebook creation failed, please try again later."
+                description: "Notebook creation failed, please try again later.",
+                variant: 'destructive'
               })
             }
         }

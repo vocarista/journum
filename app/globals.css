@@ -18,3 +18,28 @@
   --em-font-family:       'Playfair Display', serif;
   --quote-font-family:    'Playfair Display', serif;
 }
+
+.underlineAnimation {
+  position: relative;
+  display: block;
+  color: white;
+  text-decoration: none;
+}
+
+.underlineAnimation::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: white;
+  transform-origin: bottom right;
+  transition: transform 0.3s ease-out;
+}
+
+.underlineAnimation:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}

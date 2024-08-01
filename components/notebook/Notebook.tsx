@@ -47,7 +47,7 @@ const Notebook = (props: any) => {
 
   return (
     <div
-      className={`w-full min-h-[200px] bg-gradient-to-br from-amber-50 to-amber-300 rounded-2xl shadow-xl shadow-zinc-700  p-3 relative overflow-hidden hover:shadow-xl hover:shadow-zinc-600 hover:scale-105 transition-transform duration-300`}
+      className={`w-full min-h-[200px] bg-gradient-to-br from-amber-50 to-amber-200 rounded-2xl shadow-xl shadow-zinc-700  p-3 relative overflow-hidden hover:shadow-xl hover:shadow-zinc-600 hover:scale-105 transition-transform duration-300`}
       onMouseEnter={() => setShowMore(true)}
       onMouseLeave={() => setShowMore(false)}
     >
