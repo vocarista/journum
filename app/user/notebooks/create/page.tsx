@@ -5,8 +5,12 @@ import { redirect } from 'next/navigation';
 import { Button, Text } from '@radix-ui/themes';
 import Notebook from '@/components/notebook/Notebook';
 import * as Form from '@radix-ui/react-form';
+import { useToast } from '@/components/ui/use-toast';
+import { useRouter } from 'next/navigation';
 
 export default function CreateNotebook() {
+  const { toast } = useToast();
+  const router = useRouter();
     const {data: session, status} = useSession();
     useEffect(() => {
         if (status !== 'loading' && !session) {
@@ -29,9 +33,16 @@ export default function CreateNotebook() {
             })
 
             if (res.ok) {
-                window.alert('Notebook created successfully');
+                toast({
+                  title: "Success!",
+                  description: "Notebook created successfully."
+                })
+                router.push('/');
             } else {
-                window.alert('Failed to create notebook');
+              toast({
+                title: "Oops! Something went wrong.",
+                description: "Notebook creation failed, please try again later."
+              })
             }
         }
 

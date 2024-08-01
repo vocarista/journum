@@ -8,6 +8,8 @@
 // import * as Dialog from '@radix-ui/react-dialog';
 // import { Cross2Icon } from '@radix-ui/react-icons';
 
+import Loader from "@/components/loader/Loader";
+
 // const modules = {
 //     toolbar: [
 //         [{ 'header': ['1', '2', '3', '4', '5','6']}, { 'font': [] }],
@@ -24,7 +26,8 @@
   
 // }
 
-// export default function Editor({ params }: { params: { id: number } }) {
+export default function Editor({ params }: { params: { id: number } }) {
+    return(<Loader />)
 //     const {data: session, status} = useSession();
 //     const router = useRouter();
 //     const notebookId = params.id
@@ -171,4 +174,4 @@
             
 //         </div>
 //     )
-// }
+}

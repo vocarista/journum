@@ -28,7 +28,7 @@ const Profile = () => {
 
     return (
         <div className = "min-h-screen bg-black min-w-screen flex flex-col place-items-center">
-            <Flex className = "gap-4 w-[80vw] flex flex-col place-items-center min-h-10 bg-gradient-to-br from-slate-400 to-white shadow-lg shadow-neutral-700">
+            <Flex className = "gap-4 w-[80vw] flex flex-col place-items-center min-h-10 shadow-neutral-700">
                 <Image src={image || userIcon} alt="profile image" width={200} height={200} className = "rounded-full"/>
                 <Table.Root variant="ghost" className = "my-10">
                   <Table.Body>

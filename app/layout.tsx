@@ -6,6 +6,7 @@ import "./globals.css";
 import { getServerSession, Session } from "next-auth";
 import Navigation from "@/components/navbar/Navigation";
 import { Theme, ThemePanel } from "@radix-ui/themes";
+import { Toaster } from "@/components/ui/toaster";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -33,7 +34,7 @@ export default function RootLayout({
         
         <Navigation />
         {children}
-        
+        <Toaster />
         {/* <ThemePanel /> */}
         </Theme>
         </SessionProvider></body>
