@@ -169,6 +169,10 @@ const Options = ({ params }: { params: {id: number} }) => {
   return (
     <div className = {`min-h-[90vh] w-full bg-black flex flex-col place-items-center`}>
         <span className = {`text-4xl mb-10`}>Options</span>
+        <div>
+      <span className = {`text-lg mb-2 text-left underlineAnimation cursor-pointer`} onClick = {() => {
+        router.back();
+      }}>{'\u2190'} Back</span>
         <Card className = {`sm:w-[90vw] sm:h-[80dvh] md:w-[70dvw] md:h-auto lg:w-[60dvw] lg:h-auto flex flex-col place-items-center`}>
             <Flex align={'center'} direction={'column'}>
             <div
@@ -238,6 +242,7 @@ const Options = ({ params }: { params: {id: number} }) => {
             </Form>
             </Flex>
         </Card>
+        </div>
     </div>
   )
 }
