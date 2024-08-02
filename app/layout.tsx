@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body><SessionProvider session = {session}>
-      <Theme accentColor="gold" grayColor="sand" radius="small" panelBackground="translucent" appearance="dark">
+      <Theme accentColor="bronze" grayColor="sand" radius="small" panelBackground="translucent" appearance="dark">
         <Navigation />
         {children}
         <Toaster />

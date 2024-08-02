@@ -17,9 +17,7 @@ const Profile = () => {
 
     // const [newName, setNewName] = useState('');
     // const [newEmail, setNewEmail] = useState('');
-
     
-
     useEffect(() => {
         if (status !== 'loading' && !session) {
             redirect('api/auth/signin');
