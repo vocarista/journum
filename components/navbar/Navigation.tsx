@@ -4,23 +4,53 @@ import darkLogo from "@/public/logo-dark.png";
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import userIcon from '../../public/user.png';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { redirect } from 'next/navigation';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import noteBookIcon from '../../public/book.png';
+import { user } from '@/app/types/user';
+import { useToast } from '../ui/use-toast';
 
 function Navigation() {
   const { data: session, status } = useSession();
+  const [userDetails, setUserDetails] = useState<user | null>(null);
+  const { toast } = useToast();
+
   useEffect(() => {
     if (status !== 'loading' && !session) {
       redirect("/api/auth/signin");
     }
   }, [session]);
 
+  async function fetchUser() {
+    const response = await fetch(`/api/user/profile/${session?.user?.email}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if(response.ok) {
+      const data: user = await response.json();
+      setUserDetails(data);
+    } else {
+      toast({
+        title: "Oops! Something went wrong",
+        description: "There was a problem fetching your profile.",
+        variant: "destructive"
+      });
+    }
+  }
+
+  useEffect(() => {
+    if(session) {
+      fetchUser();
+    }
+  }, [session]);
+
   return (
     <Disclosure as="nav" className="bg-black">
       {({ open }) => (
-        <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6">
             <div className="relative flex h-16 items-center justify-between">
               <div className="flex items-center">
@@ -37,7 +67,7 @@ function Navigation() {
               <Menu as="div" className="relative">
                 <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                   <span className="sr-only">Open user menu</span>
-                  <Image className="rounded-full" src={session?.user?.image ? session?.user?.image : userIcon} height={40} alt="avatar" width={40} />
+                  <Image className="rounded-full aspect-square object-cover" src={userDetails?.image_url ? userDetails?.image_url : userIcon} height={40} alt="avatar" width={40} />
                 </Menu.Button>
                 <Transition
                   enter="transition ease-out duration-100"
@@ -74,7 +104,6 @@ function Navigation() {
               </Menu>
             </div>
           </div>
-        </>
       )}
     </Disclosure>
   );

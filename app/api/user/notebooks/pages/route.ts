@@ -1,6 +1,7 @@
 import { getConnection } from "@/utils/db";
 import { NextRequest, NextResponse, } from "next/server";
 import { getServerSession } from "next-auth";
+import { connect } from "http2";
 // import sanitizeHtml from 'sanitize-html';
 
 export async function GET(req: NextRequest) {
@@ -39,13 +40,18 @@ export async function POST(req: NextRequest) {
             throw new Error('Missing required fields: title or notebook_id');
         }
 
-        const [rows]: any = await connection.execute(
+        await connection.execute(
             "INSERT INTO pages (user_email, title, content, notebook_id) VALUES (?, ?, ?, ?)",
             [session?.user?.email, title, content, notebookId]
         );
+        
+        const [rows]: any = await connection.execute(
+            "SELECT * FROM pages WHERE user_email = ? AND title = ? AND notebook_id = ?",
+            [session?.user?.email, title, notebookId]
+        );
 
         connection.release();
-        return NextResponse.json({ success: true, id: rows.id });
+        return NextResponse.json({ success: true, id: rows[0].id });
     } catch (error: any) {
         console.error(error);
         return NextResponse.json({ error: error.message }, { status: 500 });
@@ -76,7 +82,7 @@ export async function PATCH(req: NextRequest) {
         //     },
         // });
 
-        const [result]: any = await connection.execute('UPDATE pages SET title = ?, content = ? WHERE id = ?', [title, content, pageId]);
+        await connection.execute('UPDATE pages SET title = ?, content = ? WHERE id = ?', [title, content, pageId]);
         connection.release();
         return NextResponse.json({ success: true });
     } catch(error: any) {

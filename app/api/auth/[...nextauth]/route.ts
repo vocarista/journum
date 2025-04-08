@@ -45,9 +45,13 @@ export const authOptions = {
             const connection = await getConnection();
             const [rows]: any = await connection.execute("SELECT * FROM users WHERE email = ?", [user.email]);
             if (rows.length === 0) {
-                await connection.execute("INSERT INTO users (email, name) VALUES (?, ?)", [user.email, user.name]);
+                await connection.execute("INSERT INTO users (email, name, image_url) VALUES (?, ?, ?)", [user.email, user.name, user.image]);
+            } else {
+                const [savedUser]: any = await connection.execute('SELECT image_url from users WHERE email = ?', [user.email]);
+                if(savedUser[0].image_url !== null) {
+                    user.image = savedUser[0].image_url;
+                }
             }
-
             connection.release();
             return user;
         }

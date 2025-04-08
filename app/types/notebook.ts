@@ -1,4 +1,4 @@
-export interface notebook {
+export type notebook = {
     id: number,
     user_id: number,
     user_email: string, 
