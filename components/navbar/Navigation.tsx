@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import darkLogo from "@/public/logo-dark.png";
 import Link from 'next/link';
-import { useSession } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
 import userIcon from '../../public/user.png';
 import { useEffect, useState } from 'react';
 import { redirect } from 'next/navigation';
@@ -18,9 +18,9 @@ function Navigation() {
 
   useEffect(() => {
     if (status !== 'loading' && !session) {
-      redirect("/api/auth/signin");
+      redirect("/login");
     }
-  }, [session]);
+  }, [session, status]);
 
   async function fetchUser() {
     const response = await fetch(`/api/user/profile/${session?.user?.email}`, {
@@ -46,7 +46,11 @@ function Navigation() {
     if(session) {
       fetchUser();
     }
-  }, [session]);
+  }, [session, fetchUser]);
+
+  const handleSignOut = async () => {
+    await signOut();
+  };
 
   return (
     <Disclosure as="nav" className="bg-black">

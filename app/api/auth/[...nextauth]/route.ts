@@ -4,8 +4,7 @@ import Github from "next-auth/providers/github";
 import Credentials from "next-auth/providers/credentials";
 import { getConnection } from "@/utils/db";
 
-
-export const authOptions = {
+const handler = NextAuth({
     providers: [
         Credentials({
             name: "Credentials",
@@ -56,8 +55,6 @@ export const authOptions = {
             return user;
         }
     }
-};
-
-export const handler = NextAuth(authOptions);
+});
 
 export { handler as GET, handler as POST };

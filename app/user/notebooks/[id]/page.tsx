@@ -1,8 +1,8 @@
 "use client";
-import { useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
-import { useRouter, useParams } from 'next/navigation';
-import { page } from '@/app/types/page';
+import { useRouter } from 'next/navigation';
+import { pageType } from '@/app/types/pageType';
 
 import Loader from "@/components/loader/Loader";
 import Page from '@/components/page/Page';
@@ -22,7 +22,7 @@ export default function Pages({ params }: { params: { id: number } }) {
         if (status === 'unauthenticated') {
             router.push('/login');
         }
-    }, [status])
+    }, [status, router]);
 
     async function fetchPages() {
         try {
@@ -41,7 +41,7 @@ export default function Pages({ params }: { params: { id: number } }) {
 
     useEffect(() => {
         fetchPages();
-    }, [notebookId])
+    }, [notebookId, fetchPages]);
 
     async function createPage() {
         const response = await fetch(`/api/user/notebooks/pages`, {

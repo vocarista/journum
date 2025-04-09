@@ -1,8 +1,8 @@
 "use client"
-import React, { useEffect, useState, } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { redirect, useRouter } from 'next/navigation';
-import { Card, Flex,} from '@radix-ui/themes';
+import { Card, Flex } from '@radix-ui/themes';
 import Image from 'next/image';
 import userIcon from '@/public/user.png';
 import Link from 'next/link';
@@ -22,9 +22,9 @@ const Profile = () => {
 
     useEffect(() => {
         if (status === 'unauthenticated') {
-            redirect('api/auth/signin');
+            redirect('/login');
         }
-    }, [session])
+    }, [session, status]);
 
     async function fetchUser() {
       const response = await fetch(`/api/user/profile/${user?.email}`, {
@@ -43,7 +43,6 @@ const Profile = () => {
           description: "There was a problem fetching your profile.",
           variant: "destructive"
         });
-        router.push('/');
       }
     }
 
@@ -80,10 +79,10 @@ const Profile = () => {
     }
 
     useEffect(() => {
-      if(session) {
+      if(user) {
         fetchUser();
       }
-    }, [session]);
+    }, [user, fetchUser]);
 
     return (
         <div className = "min-h-screen bg-black min-w-screen flex flex-col place-items-center">

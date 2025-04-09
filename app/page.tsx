@@ -11,7 +11,7 @@ export default function Home() {
 
   useEffect(() => {
     if (status == 'unauthenticated') {
-      router.push('/api/auth/signin');
+      router.push('/login');
     }
 }, [status])
 
@@ -51,7 +51,7 @@ export default function Home() {
       {session && 
         notebooks.map((notebook: any, index) => {
           return (
-            <Notebook handleDelete = {handleDelete} editMode = {false} id={notebook.id} title={notebook.title} description={notebook.description} image={notebook.image} />
+            <Notebook key={notebook.id} handleDelete = {handleDelete} editMode = {false} id={notebook.id} title={notebook.title} description={notebook.description} image={notebook.image} />
           )
         })
       }
